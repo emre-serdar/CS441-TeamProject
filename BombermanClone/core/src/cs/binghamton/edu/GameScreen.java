@@ -27,7 +27,7 @@ public class GameScreen implements Screen {
         gameCam = new OrthographicCamera();
 
         //to protect ratio for any screen size
-        gamePort = new FitViewport(480,480,gameCam);
+        gamePort = new FitViewport(Bomberman.WORLD_WIDTH,Bomberman.WORLD_HEIGHT,gameCam);
 
         texture = new Texture("badlogic.jpg");
     }

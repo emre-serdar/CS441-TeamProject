@@ -9,6 +9,10 @@ import com.badlogic.gdx.utils.ScreenUtils;
 public class Bomberman extends Game {
 	public SpriteBatch batch; //to give access to screens
 
+	//world parameters for height and width
+	public static final int WORLD_HEIGHT = 480;
+	public static final int WORLD_WIDTH = 480;
+
 	
 	@Override
 	public void create () {
