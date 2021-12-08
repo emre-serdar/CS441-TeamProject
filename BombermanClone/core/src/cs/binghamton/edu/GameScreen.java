@@ -20,7 +20,9 @@ public class GameScreen implements Screen {
     //game viewport
     private Viewport gamePort;
 
-    Texture texture;
+    //hud
+    private Hud hud;
+
 
     public GameScreen(Bomberman game){
         this.game = game;
@@ -29,7 +31,7 @@ public class GameScreen implements Screen {
         //to protect ratio for any screen size
         gamePort = new FitViewport(Bomberman.WORLD_WIDTH,Bomberman.WORLD_HEIGHT,gameCam);
 
-        texture = new Texture("badlogic.jpg");
+        hud = new Hud(game.batch);
     }
     @Override
     public void show() {
@@ -41,10 +43,11 @@ public class GameScreen implements Screen {
         //to clear screen
         ScreenUtils.clear(1, 0, 0, 1);
 
-        game.batch.begin();
-        game.batch.draw(texture,0,0);
+        //game.batch.begin();
+        game.batch.setProjectionMatrix(hud.stage.getCamera().combined);
+        hud.stage.draw();
 
-        game.batch.end();
+        //game.batch.end();
 
     }
 

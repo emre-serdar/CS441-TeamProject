@@ -52,6 +52,6 @@ public class Hud {
         table.add(hp).expandX();
         table.add(countDown).expandX();
 
-
+        stage.addActor(table);
     }
 }
