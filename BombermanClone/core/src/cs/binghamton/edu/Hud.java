@@ -42,15 +42,18 @@ public class Hud {
         //creating labels
         countDown = new Label(String.format("%03d", timer), new Label.LabelStyle(new BitmapFont(), Color.WHITE));
         hp =  new Label(String.format("%03d", healthPoints), new Label.LabelStyle(new BitmapFont(), Color.WHITE));
-        hpLabel = new Label("HEALTH", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
-        countDownLabel = new Label("TIME", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
+        hpLabel = new Label("HEALTH:", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
+        countDownLabel = new Label("TIME:", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
 
         //inserting labels to table
-        table.add(hpLabel).expandX().padTop(10);
-        table.add(countDownLabel).expandX().pad(10);
-        table.row(); //defining a new raw after this line
-        table.add(hp).expandX();
-        table.add(countDown).expandX();
+        table.add(hpLabel).expandX().padLeft(20);
+        table.add(hp).expandX().padLeft(-20);
+        table.add(countDownLabel).expandX().padRight(20);
+        table.add(countDown).expandX().padLeft(-70);
+        table.padTop(10);
+
+
+
 
         stage.addActor(table);
     }
