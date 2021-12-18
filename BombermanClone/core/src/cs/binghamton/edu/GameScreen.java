@@ -1,6 +1,7 @@
 package cs.binghamton.edu;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -10,6 +11,7 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
@@ -50,7 +52,7 @@ public class GameScreen implements Screen {
 
 
     //
-    private Texture texture;
+    private Player player;
 
     public GameScreen(Bomberman game){
         this.game = game;
@@ -77,6 +79,9 @@ public class GameScreen implements Screen {
         world = new World(new Vector2(0,0), true);
         debugRenderer = new Box2DDebugRenderer();
 
+        //player
+        player = new Player(world);
+
         BodyDef bodyDef = new BodyDef();
         PolygonShape shape = new PolygonShape();
         FixtureDef fixtureDef = new FixtureDef();
@@ -88,11 +93,11 @@ public class GameScreen implements Screen {
             Rectangle objectBody = ((RectangleMapObject) object).getRectangle();
 
             //dynamic body for blocks in the map
-            bodyDef.type = BodyDef.BodyType.DynamicBody;
-            bodyDef.position.set(objectBody.getX() + objectBody.getWidth()/2, objectBody.getY() + objectBody.getHeight()/2);
+            bodyDef.type = BodyDef.BodyType.StaticBody;
+            bodyDef.position.set((objectBody.getX() + objectBody.getWidth()/2), (objectBody.getY() + objectBody.getHeight()/2));
             body = world.createBody(bodyDef);
 
-            shape.setAsBox(objectBody.getWidth()/2, objectBody.getHeight()/2 );
+            shape.setAsBox(objectBody.getWidth()/2, objectBody.getHeight()/2);
             fixtureDef.shape = shape;
             body.createFixture(fixtureDef);
 
@@ -102,11 +107,11 @@ public class GameScreen implements Screen {
             Rectangle objectBody = ((RectangleMapObject) object).getRectangle();
 
 
-            bodyDef.type = BodyDef.BodyType.DynamicBody;
-            bodyDef.position.set(objectBody.getX() + objectBody.getWidth()/2, objectBody.getY() + objectBody.getHeight()/2);
+            bodyDef.type = BodyDef.BodyType.StaticBody;
+            bodyDef.position.set((objectBody.getX() + objectBody.getWidth()/2), (objectBody.getY() + objectBody.getHeight()/2));
             body = world.createBody(bodyDef);
 
-            shape.setAsBox(objectBody.getWidth()/2, objectBody.getHeight()/2 );
+            shape.setAsBox(objectBody.getWidth()/2, objectBody.getHeight()/2);
             fixtureDef.shape = shape;
             body.createFixture(fixtureDef);
 
@@ -118,14 +123,21 @@ public class GameScreen implements Screen {
     }
 
     public void handleInput(float delta){
-        if (Gdx.input.isTouched()) {
-            gameCam.position.x += 100 * delta;
-            gameCam.position.y += 100 *delta;
+        if (Gdx.input.isKeyJustPressed(Input.Keys.UP)){
+
         }
+        if (Gdx.input.isKeyPressed(Input.Keys.RIGHT) && player.b2body.getLinearVelocity().x <= 10)
+            player.b2body.applyLinearImpulse(new Vector2(10f, 0), player.b2body.getWorldCenter(), true);
+        if (Gdx.input.isKeyPressed(Input.Keys.LEFT) && player.b2body.getLinearVelocity().x >= -10)
+            player.b2body.applyLinearImpulse(new Vector2(-10f, 0), player.b2body.getWorldCenter(), true);
+
     }
 
     public void update(float delta){
         handleInput(delta);
+
+        //timestep, velocity and position iterations for player
+        world.step(1/60f,6,2);
 
         //update game cam every iteration of render cycle
         gameCam.update();
