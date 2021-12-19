@@ -1,6 +1,7 @@
 package cs.binghamton.edu;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Rectangle;
@@ -15,6 +16,8 @@ public class Player extends Sprite {
     //world
     public World world;
     public Body b2body;
+    private TextureRegion playerStand;
+
 
 
 
@@ -34,6 +37,7 @@ public class Player extends Sprite {
     public Player(World world){
         this.world = world;
         definePlayer();
+        //playerStand = new TextureRegion(,0,0);
 
     }
 

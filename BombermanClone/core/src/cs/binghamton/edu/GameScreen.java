@@ -126,11 +126,14 @@ public class GameScreen implements Screen {
         if (Gdx.input.isKeyJustPressed(Input.Keys.UP)){
 
         }
-        if (Gdx.input.isKeyPressed(Input.Keys.RIGHT) && player.b2body.getLinearVelocity().x <= 10)
-            player.b2body.applyLinearImpulse(new Vector2(10f, 0), player.b2body.getWorldCenter(), true);
-        if (Gdx.input.isKeyPressed(Input.Keys.LEFT) && player.b2body.getLinearVelocity().x >= -10)
-            player.b2body.applyLinearImpulse(new Vector2(-10f, 0), player.b2body.getWorldCenter(), true);
-
+        if (Gdx.input.isKeyPressed(Input.Keys.RIGHT))
+            player.b2body.applyLinearImpulse(new Vector2(5f, 0), player.b2body.getWorldCenter(), true);
+        if (Gdx.input.isKeyPressed(Input.Keys.LEFT))
+            player.b2body.applyLinearImpulse(new Vector2(-5f, 0), player.b2body.getWorldCenter(), true);
+        if (Gdx.input.isKeyPressed(Input.Keys.UP))
+            player.b2body.applyLinearImpulse(new Vector2(0, 5f), player.b2body.getWorldCenter(), true);
+        if (Gdx.input.isKeyPressed(Input.Keys.DOWN))
+            player.b2body.applyLinearImpulse(new Vector2(0, -5f), player.b2body.getWorldCenter(), true);
     }
 
     public void update(float delta){
