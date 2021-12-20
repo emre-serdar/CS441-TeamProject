@@ -14,7 +14,7 @@ public class Bomberman extends Game {
 	public static final int WORLD_WIDTH = 270;
 
 	//pixels per meter
-	public static final float PPM = 100;
+	//public static final float PPM = 100;
 	
 	@Override
 	public void create () {

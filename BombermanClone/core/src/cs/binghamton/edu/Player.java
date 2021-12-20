@@ -34,10 +34,13 @@ public class Player extends Sprite {
     //position
     Rectangle boundingBox;
 
-    public Player(World world){
+    public Player(World world, GameScreen screen){
+        super(screen.getAtlas().findRegion("up1"));
         this.world = world;
         definePlayer();
-        //playerStand = new TextureRegion(,0,0);
+        playerStand = new TextureRegion(getTexture(),0,0,16,16);
+        setBounds(0,0,16,16);
+        setRegion(playerStand);
 
     }
 
@@ -61,6 +64,6 @@ public class Player extends Sprite {
 
 }
 
-    //
+
 
 

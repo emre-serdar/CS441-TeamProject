@@ -5,6 +5,7 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
@@ -26,6 +27,9 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 public class GameScreen implements Screen {
     //game object to set screen on Bomberman.java class
     private Bomberman game;
+
+    //texture atlas
+    private TextureAtlas atlas;
 
     //game camera
     private OrthographicCamera gameCam;
@@ -70,7 +74,7 @@ public class GameScreen implements Screen {
         //rendering map
         renderer = new OrthogonalTiledMapRenderer(map);
 
-
+        atlas = new TextureAtlas("BombermanAssets.atlas");
 
         //
         gameCam.position.set(118,125,0);
@@ -80,7 +84,7 @@ public class GameScreen implements Screen {
         debugRenderer = new Box2DDebugRenderer();
 
         //player
-        player = new Player(world);
+        player = new Player(world,this);
 
         BodyDef bodyDef = new BodyDef();
         PolygonShape shape = new PolygonShape();
@@ -150,6 +154,10 @@ public class GameScreen implements Screen {
 
     }
 
+    public TextureAtlas getAtlas(){
+        return atlas;
+    }
+
     @Override
     public void show() {
 
@@ -170,15 +178,16 @@ public class GameScreen implements Screen {
         //box2D renderer
         debugRenderer.render(world, gameCam.combined);
 
-        //game.batch.begin();
+
+
+
+        game.batch.setProjectionMatrix(gameCam.combined);
+        game.batch.begin();
+        player.draw(game.batch);
+        game.batch.end();
+
         game.batch.setProjectionMatrix(hud.stage.getCamera().combined);
         hud.stage.draw();
-
-
-
-        //game.batch.begin();
-        //game.batch.end();
-
 
 
 
