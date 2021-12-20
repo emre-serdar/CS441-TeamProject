@@ -96,7 +96,7 @@ public class GameScreen implements Screen {
         for(MapObject object : map.getLayers().get(3).getObjects().getByType(RectangleMapObject.class)){
             Rectangle objectBody = ((RectangleMapObject) object).getRectangle();
 
-            //dynamic body for blocks in the map
+            //static body for blocks in the map
             bodyDef.type = BodyDef.BodyType.StaticBody;
             bodyDef.position.set((objectBody.getX() + objectBody.getWidth()/2), (objectBody.getY() + objectBody.getHeight()/2));
             body = world.createBody(bodyDef);
@@ -127,9 +127,6 @@ public class GameScreen implements Screen {
     }
 
     public void handleInput(float delta){
-        if (Gdx.input.isKeyJustPressed(Input.Keys.UP)){
-
-        }
         if (Gdx.input.isKeyPressed(Input.Keys.RIGHT))
             player.b2body.applyLinearImpulse(new Vector2(5f, 0), player.b2body.getWorldCenter(), true);
         if (Gdx.input.isKeyPressed(Input.Keys.LEFT))
@@ -145,6 +142,9 @@ public class GameScreen implements Screen {
 
         //timestep, velocity and position iterations for player
         world.step(1/60f,6,2);
+
+        //
+        player.update(delta);
 
         //update game cam every iteration of render cycle
         gameCam.update();
@@ -177,8 +177,6 @@ public class GameScreen implements Screen {
 
         //box2D renderer
         debugRenderer.render(world, gameCam.combined);
-
-
 
 
         game.batch.setProjectionMatrix(gameCam.combined);
